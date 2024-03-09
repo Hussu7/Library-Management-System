@@ -8,7 +8,7 @@ const BackButton = () => {
 
   return (
     <div className='fixed left-14 top-20 cursor-pointer'>
-        <IoArrowBackCircle size={50} onClick={()=>{navigate(-1)}}  />
+        <IoArrowBackCircle size={40} onClick={()=>{navigate(-1)}}  />
     </div>
   )
 }
