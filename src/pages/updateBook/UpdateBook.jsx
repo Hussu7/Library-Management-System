@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import Navbar from "../../components/navbar/Navbar";
+import BackButton from "../../components/BackButton/BackButton";
 
 const UpdateBook = () => {
   const navigate = useNavigate();
@@ -49,11 +51,13 @@ const UpdateBook = () => {
   
   return (
     <>
+    <Navbar/>
       <div className="w-full py-12 min-h-screen dark:text-white dark:bg-gray-800 dark:border-gray-700 flex flex-col justify-center items-center ">
+       <BackButton/>
         <h1 className="font-bold text-2xl mb-10">Enter Book Details</h1>
 
         <form
-          className="max-w-sm mx-auto grid grid-cols-2 gap-x-7"
+          className="max-w-sm mx-auto grid items-center grid-cols-2 gap-x-7"
           onSubmit={handleSubmit}
         >
           <div className="mb-5">
@@ -164,7 +168,7 @@ const UpdateBook = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="mb-5">
+          <div className="mb-5 flex flex-col items-left">
             <label
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               htmlFor="image"

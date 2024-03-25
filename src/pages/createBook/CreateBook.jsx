@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Navbar from "../../components/navbar/Navbar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import BackButton from "../../components/BackButton/BackButton";
 
 const CreateBook = () => {
   const navigate = useNavigate();
@@ -23,21 +24,28 @@ const CreateBook = () => {
     });
   };
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-    console.log(image);
+    try {
+      e.preventDefault();
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+      formData.append("image", image);
 
-    formData.append("image", image);
+      const response = await axios.post("http://localhost:3000/book", formData);
 
-    const response = await axios.post("http://localhost:3000/book", formData);
-    if (response.status === 201) {
-      alert("book added successfully");
-      navigate("/");
-    } else {
-      alert("Something Went Wrong");
+      if (response.status === 201) {
+        alert("book added successfully");
+        navigate("/");
+      } else if (response.status === 500) {
+        cconsole.log(response);
+      } else {
+        alert("Something Went Wrong");
+      }
+    } catch (error) {
+      if (error) {
+        console.log("file type not supported");
+      }
     }
   };
 
@@ -46,9 +54,10 @@ const CreateBook = () => {
       <div className="h-screen">
         <Navbar />
         <div className="w-full h-full py-8 dark:text-white dark:bg-gray-800 dark:border-gray-700 flex flex-col justify-center items-center ">
+          <BackButton />
           <h1 className="font-bold text-2xl mb-10">Enter Book Details</h1>
           <form
-            className="max-w-sm mx-auto grid grid-cols-2 gap-x-7"
+            className="max-w-sm mx-auto grid grid-cols-2  items-center gap-x-7"
             onSubmit={handleSubmit}
           >
             <div className="mb-5">
@@ -166,6 +175,7 @@ const CreateBook = () => {
                 id="image"
                 name="image"
                 type="file"
+                required
                 onChange={(e) => setImage(e.target.files[0])}
               />
               <div
@@ -177,7 +187,7 @@ const CreateBook = () => {
             </div>
             <button
               type="submit"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="text-white w-6 h-12 items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Add Book
             </button>

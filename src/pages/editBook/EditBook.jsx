@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/navbar/Navbar";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import Button from "../../components/Button/Button";
-import DeleteConfirmation from "../../components/DeleteConfirmation/DeleteConfirmation";
 import BackButton from "../../components/BackButton/BackButton";
 const EditBook = () => {
   const [books, setBooks] = useState([]);
-  // const [confirmdelete, setConfirmDelete]=useState(false)
   const fetchBooks = async () => {
-    const fetchResponse = await axios.get("http://localhost:3000/book");
+    const fetchResponse = await axios.get("https://lms-backend-xs1z.onrender.com/book");
     setBooks(fetchResponse.data.data);
+  
   };
   const handleDelete = async (id) => {
-    const response = await axios.delete(`http://localhost:3000/book/${id}`);
+    const response = await axios.delete(`https://lms-backend-xs1z.onrender.com/book/${id}`);
     if (response.status === 200) {
       alert("Your Book deleted successfully");
     }
+    fetchBooks()
   };
 
   useEffect(() => {
     fetchBooks();
-  }, [books]);
+  }, []);
 
   return (
     <div className="w-full  min-h-screen dark:text-white dark:bg-gray-800 dark:border-gray-700">

@@ -7,7 +7,7 @@ const BackButton = () => {
     const navigate=useNavigate()
 
   return (
-    <div className='fixed left-14 top-20 cursor-pointer'>
+    <div className='fixed left-14 top-20 cursor-pointer bg-transparent'>
         <IoArrowBackCircle size={40} onClick={()=>{navigate(-1)}}  />
     </div>
   )
